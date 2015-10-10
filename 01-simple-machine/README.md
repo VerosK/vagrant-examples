@@ -1,5 +1,7 @@
 # Vagrant box with NGINX
 
-* just install `nginx` and start it
+* installed by shell script
 
-* port 80 is forwarded
+* just installs `nginx` and starst it
+
+* guest port 80 is forwarded host:7081

@@ -1,0 +1,13 @@
+---
+- name: Install NGINX
+  sudo: yes
+  hosts: all
+  tasks:
+  - name: Install nginx
+    yum: name=nginx state=installed enablerepo=epel
+
+  - name: Start nginx
+    service: name=nginx state=running enabled=yes
+
+  - name: Enable port 80
+    firewalld: state=enabled service=http permanent=yes immediate=yes

@@ -1,0 +1,28 @@
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "vStone/centos-7.x-puppet.3.x"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--usb", "off"]
+    vb.customize ["modifyvm", :id, "--usbehci", "off"]
+  end
+
+  config.vm.provision "puppet" do |puppet|
+    puppet.manifest_file = "site.pp"
+    puppet.manifests_path = "provision"
+  end
+
+  config.vm.define "django-01" do |node|
+    node.vm.hostname = "django-01"
+    node.vm.network "forwarded_port", guest: 80, host: 8083
+    node.vm.network "private_network", ip: "10.0.194.21"
+  end
+
+  config.vm.define "pgsql-01" do |node|
+    node.vm.hostname = "pgsql-01"
+    node.vm.network "forwarded_port", guest: 80, host: 8082
+    node.vm.network "private_network", ip: "10.0.194.51"
+  end
+
+end
